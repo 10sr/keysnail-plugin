@@ -6,9 +6,9 @@ var PLUGIN_INFO =
     <description lang="ja">少し休んでみては…？</description>
     <version>0.2</version>
     <updateURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.ks.js</updateURL>
-    <author homepage="">10sr</author>
+    <author homepage="http://10sr.jottit.com">10sr</author>
     <iconURL></iconURL>
-    <provides> <ext> shiitake-toggle-style</ext> </provides>
+    <provides> <ext>shiitake-toggle-style</ext> </provides>
     <license>MPL 1.1</license>
     <license lang="ja">MPL 1.1</license>
     <minVersion>1.0</minVersion>
@@ -17,11 +17,27 @@ var PLUGIN_INFO =
 === Usage ===
 Have your coffee.
 
+paste in preserve area as below:
+>||
+hook.addToHook("KeySnailInitialized",
+               function () {
+                   ext.exec("shiitake-toggle-style");
+               });
+||<
+
 Thanks https://addons.mozilla.org/ja/firefox/addon/4298/
     ]]></detail>
     <detail lang="ja"><![CDATA[
 === 使い方 ===
 つ旦
+
+以下のようにpreserveエリアに貼り付けるといいと思います
+>||
+hook.addToHook("KeySnailInitialized",
+               function () {
+                   ext.exec("shiitake-toggle-style");
+               });
+||<
 
 感謝→ https://addons.mozilla.org/ja/firefox/addon/4298/
     ]]></detail>
@@ -50,4 +66,4 @@ toolbar[iconsize="small"] #button-stop[disabled="true"] {
 ext.add("shiitake-toggle-style",
         function(){
             style.toggle(shiitakeStyle);
-        },"toggle shiitake style");
+        }, "toggle shiitake style");
