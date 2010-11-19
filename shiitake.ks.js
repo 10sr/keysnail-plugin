@@ -4,10 +4,11 @@ var PLUGIN_INFO =
     <name lang="ja">中止ボタンがしいたけに見えて困る</name>
     <description>You should take a little rest...</description>
     <description lang="ja">少し休んでみては…？</description>
-    <version>0.1</version>
-    <updateURL></updateURL>
-    <author homepage="https://github.com/10sr/keysnail-plugin/raw/master/shiitake.ks.js">10sr</author>
+    <version>0.2</version>
+    <updateURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.ks.js</updateURL>
+    <author homepage="">10sr</author>
     <iconURL></iconURL>
+    <provides> <ext> shiitake-toggle-style</ext> </provides>
     <license>MPL 1.1</license>
     <license lang="ja">MPL 1.1</license>
     <minVersion>1.0</minVersion>
@@ -46,7 +47,7 @@ toolbar[iconsize="small"] #button-stop[disabled="true"] {
 }
 ]]></>.toString();
 
-ext.add("shiitake-toggle",
-        function() {
+ext.add("shiitake-toggle-style",
+        function(){
             style.toggle(shiitakeStyle);
-        },"toggle shiitake");
+        },"toggle shiitake style");
