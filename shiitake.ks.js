@@ -17,7 +17,7 @@ var PLUGIN_INFO =
 === Usage ===
 Have your coffee.
 
-paste in preserve area as below:
+add to hook as below:
 >||
 hook.addToHook("KeySnailInitialized",
                function () {
@@ -31,7 +31,7 @@ Thanks https://addons.mozilla.org/ja/firefox/addon/4298/
 === 使い方 ===
 つ旦
 
-以下のようにpreserveエリアに貼り付けるといいと思います
+以下のようにフックかけるといいと思います
 >||
 hook.addToHook("KeySnailInitialized",
                function () {
