@@ -7,7 +7,7 @@ var PLUGIN_INFO =
     <version>0.2</version>
     <updateURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.ks.js</updateURL>
     <author homepage="http://10sr.jottit.com">10sr</author>
-    <iconURL></iconURL>
+    <iconURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.png</iconURL>
     <provides> <ext>shiitake-toggle-style</ext> </provides>
     <license>MPL 1.1</license>
     <license lang="ja">MPL 1.1</license>
