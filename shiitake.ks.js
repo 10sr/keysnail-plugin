@@ -4,11 +4,11 @@ var PLUGIN_INFO =
     <name lang="ja">中止ボタンがしいたけに見えて困る</name>
     <description>You should take a little rest!</description>
     <description lang="ja">少し休んでみては…？</description>
-    <version>0.3</version>
+    <version>0.3.1</version>
     <updateURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.ks.js</updateURL>
     <author homepage="http://10sr.jottit.com">10sr</author>
     <iconURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.png</iconURL>
-    <provides> <ext>shiitake-toggle-style</ext> </provides>
+    <provides> <ext>shiitake-toggle-style</ext><ext>shiitake-enable-style</ext><ext>shiitake-disable-style</ext> </provides>
     <license>MPL 1.1</license>
     <license lang="ja">MPL 1.1</license>
     <minVersion>1.0</minVersion>
