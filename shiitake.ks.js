@@ -2,9 +2,9 @@ var PLUGIN_INFO =
 <KeySnailPlugin>
     <name>shiitake stop</name>
     <name lang="ja">中止ボタンがしいたけに見えて困る</name>
-    <description>You should take a little rest...</description>
+    <description>You should take a little rest!</description>
     <description lang="ja">少し休んでみては…？</description>
-    <version>0.2</version>
+    <version>0.3</version>
     <updateURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.ks.js</updateURL>
     <author homepage="http://10sr.jottit.com">10sr</author>
     <iconURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.png</iconURL>
@@ -17,11 +17,12 @@ var PLUGIN_INFO =
 === Usage ===
 Have your coffee.
 
-add to hook as below:
+Just add to hook as below:
+
 >||
 hook.addToHook("KeySnailInitialized",
                function () {
-                   ext.exec("shiitake-toggle-style");
+                   ext.exec("shiitake-enable-style");
                });
 ||<
 
@@ -32,10 +33,11 @@ Thanks https://addons.mozilla.org/ja/firefox/addon/4298/
 つ旦
 
 以下のようにフックかけるといいと思います
+
 >||
 hook.addToHook("KeySnailInitialized",
                function () {
-                   ext.exec("shiitake-toggle-style");
+                   ext.exec("shiitake-enable-style");
                });
 ||<
 
@@ -67,3 +69,13 @@ ext.add("shiitake-toggle-style",
         function(){
             style.toggle(shiitakeStyle);
         }, "toggle shiitake style");
+
+ext.add("shiitake-enable-style",
+        function(){
+            style.register(shiitakeStyle);
+        }, "enable shiitake style");
+
+ext.add("shiitake-disable-style",
+        function(){
+            style.unregister(shiitakeStyle);
+        }, "disable shiitake style");
