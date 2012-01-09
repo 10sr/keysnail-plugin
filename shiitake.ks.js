@@ -4,7 +4,7 @@ var PLUGIN_INFO =
     <name lang="ja">中止ボタンがしいたけに見えて困る</name>
     <description>You should take a little rest!</description>
     <description lang="ja">少し休んでみては…？</description>
-    <version>0.3.1</version>
+    <version>0.3.2</version>
     <updateURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.ks.js</updateURL>
     <author homepage="http://10sr.jottit.com">10sr</author>
     <iconURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.png</iconURL>
@@ -15,9 +15,10 @@ var PLUGIN_INFO =
     <include>main</include>
     <detail><![CDATA[
 === Usage ===
-Have your coffee.
 
-Just add to hook as below:
+    How about having a coffee break?
+
+    To enable plugin just add to hook.
 
 >||
 hook.addToHook("KeySnailInitialized",
@@ -26,13 +27,15 @@ hook.addToHook("KeySnailInitialized",
                });
 ||<
 
-Thanks https://addons.mozilla.org/ja/firefox/addon/4298/
+    Thanks https://addons.mozilla.org/ja/firefox/addon/4298/
     ]]></detail>
     <detail lang="ja"><![CDATA[
 === 使い方 ===
-つ旦
 
-以下のようにフックかけるといいと思います
+    つ旦
+
+
+    以下のようにフックかけるといいと思います
 
 >||
 hook.addToHook("KeySnailInitialized",
@@ -41,7 +44,7 @@ hook.addToHook("KeySnailInitialized",
                });
 ||<
 
-感謝→ https://addons.mozilla.org/ja/firefox/addon/4298/
+    感謝→ https://addons.mozilla.org/ja/firefox/addon/4298/
     ]]></detail>
 </KeySnailPlugin>;
 
