@@ -56,16 +56,16 @@ var OpenBookmarksInNewTab = {
             .classes['@mozilla.org/preferences;1']
             .getService(Components.interfaces.nsIPrefBranch);
 
-        if ( // clicking on folder
+        if (
             aEvent &&
                 (
-                    ( // tree
+                    (
                         aEvent.target.localName == 'treechildren' &&
                             aEvent.currentTarget.selectedNode &&
                             !PlacesUtils.nodeIsURI(aEvent.currentTarget.selectedNode) &&
                             PlacesUtils.nodeIsContainer(aEvent.currentTarget.selectedNode)
                     ) ||
-                        ( // toolbar, menu
+                        (
                                 aEvent.originalTarget &&
                                 aEvent.originalTarget.node &&
                                 PlacesUtils.nodeIsContainer(aEvent.originalTarget.node)
@@ -80,8 +80,8 @@ var OpenBookmarksInNewTab = {
                 PlacesUIUtils.checkURLSecurity(aNode) &&
                 PlacesUtils.nodeIsBookmark(aNode) &&
                 (
-                    aNode.uri.indexOf('javascript:') == 0 || // bookmarklets
-                    ( // web panels
+                    aNode.uri.indexOf('javascript:') == 0 ||
+                    (
                         PlacesUtils.annotations.itemHasAnnotation(
                             aNode.itemId,
                             'bookmarkProperties/loadInSidebar'
@@ -120,24 +120,15 @@ var OpenBookmarksInNewTab = {
         }
     },
 
-    handleEvent : function(aEvent)
-    {
-        switch (aEvent.type)
-        {
-        case 'load':
-            window.removeEventListener('load', this, false);
-            this.init();
-            return;
-        }
-    }
 };
+
+OpenBookmarksInNewTab.init();
 
 pref("keysnailplugin.openbookmarkintab.reverseBehaviorForMiddleClick", false);
 pref("keysnailplugin.openbookmarkintab.reuseBlankTab", true);
 
-window.addEventListener('load', OpenBookmarksInNewTab, false);
+// window.addEventListener('load', OpenBookmarksInNewTab, false);
 
 // hook.addToHook("KeySnailInitialized",
 //               OpenBookmarksInNewTab.init);
 
-// OpenBookmarksInNewTab.init();
