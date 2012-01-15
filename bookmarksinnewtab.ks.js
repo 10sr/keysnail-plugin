@@ -19,7 +19,7 @@ open bookmark in new tab
     ]]></detail>
 </KeySnailPlugin>;
 
-var OpenBookmarksInNewTab = {
+ksPluginManager.gBrowser.OpenBookmarksInNewTab = {
     init : function()
     {
         if (!('PlacesUIUtils' in window))
@@ -29,7 +29,7 @@ var OpenBookmarksInNewTab = {
             eval('PlacesUIUtils.openNodeWithEvent = '+
                  PlacesUIUtils.openNodeWithEvent.toSource().replace(
                          /(([^\s]*)whereToOpenLink\(aEvent\))/,
-                     '$2OpenBookmarksInNewTab.convertWhereToOpenLink($1, null, aNode)'
+                     'ksPluginManager.gBrowser.OpenBookmarksInNewTab.convertWhereToOpenLink($1, null, aNode)'
                  )
                 );
 
@@ -37,7 +37,7 @@ var OpenBookmarksInNewTab = {
                  PlacesUIUtils._openTabset.toSource().replace(
                      'if (where == "window") {',
                          <![CDATA[
-                             where = browserWindow.OpenBookmarksInNewTab.convertWhereToOpenLink(where, aEvent);
+                             where = ksPluginManager.gBrowser.OpenBookmarksInNewTab.convertWhereToOpenLink(where, aEvent);
                              $&
                          ]]>
                  )
@@ -124,8 +124,8 @@ var OpenBookmarksInNewTab = {
 
 OpenBookmarksInNewTab.init();
 
-pref("keysnailplugin.openbookmarkintab.reverseBehaviorForMiddleClick", false);
-pref("keysnailplugin.openbookmarkintab.reuseBlankTab", true);
+// pref("extension.keysnail.plugin.openbookmarkintab.reverseBehaviorForMiddleClick", false);
+// pref("extension.keysnail.plugin.openbookmarkintab.reuseBlankTab", true);
 
 // window.addEventListener('load', OpenBookmarksInNewTab, false);
 
