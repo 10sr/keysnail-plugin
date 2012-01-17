@@ -30,21 +30,6 @@ function digURL(){
                     });
 }
 
-function dig2(){
-    var url = window.content.location.href;
-    var durl = [url,];
-    var s = url;
-    for(var i = 1;i < 50; i++){
-        if(s.match(/:\/\/[^/]+\/?$/)){ break; }
-        s = s.replace(/(\/|#)[^/#]+\/?$/, "");
-        durl[i] = s;
-    }
-    prompt.selector({ message : "dig " + url,
-                      collection : durl,
-                      callback : function (i) { window.content.location.href = durl[i]; },
-                    });
-}
-
 plugins.withProvides(function (provide) {
     provide("dig-url", digURL, "dig url with selector");
 }, PLUGIN_INFO);
