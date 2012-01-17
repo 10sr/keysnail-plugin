@@ -17,7 +17,7 @@ var PLUGIN_INFO =
 
 function digURL(){
     var url = window.content.location.href;
-    var re = /(\/|#)/;          // paren cannot be removed!
+    var re = plugins.options["dig_url.separater_regexp"] || /(\/|#)/;          // paren cannot be removed!
     var durl = [url,];
     var elem = url.split(re);
     for(var i = elem.length - 1; i > 4; i--){
