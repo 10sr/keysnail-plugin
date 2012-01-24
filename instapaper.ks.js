@@ -55,11 +55,9 @@ function post(tab, cm){
                           gBrowser.removeTab(tab);
                       } else{
                           display.echoStatusBar("Instapaper: Something wrong has happended!");
-                          gBrowser.selectedTab = gBrowser.addTab("http://www.instapaper.com/edit?url=" +
-                                                                encodeURIComponent(url) +
-                                                                "&title=" +
-                                                                encodeURIComponent(title));
-                          // url = "javascript:function%20iprl5(){var%20d=document,z=d.createElement('scr'+'ipt'),b=d.body,l=d.location;try{if(!b)throw(0);d.title='(Saving...)%20'+d.title;z.setAttribute('src',l.protocol+'//www.instapaper.com/j/mt8YO6Cuosmf?u='+encodeURIComponent(l.href)+'&t='+(new%20Date().getTime()));b.appendChild(z);}catch(e){alert('Please%20wait%20until%20the%20page%20has%20loaded.');}}iprl5();void(0)";
+                          gBrowser.selectedTab = gBrowser.addTab("http://www.instapaper.com/edit?url=" + encodeURIComponent(url) + 
+                                                                 "&title=" + encodeURIComponent(title) + 
+                                                                 "&summary=" + encodeURIComponent(cm));
                       }
                   }
                  );
