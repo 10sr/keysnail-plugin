@@ -37,7 +37,7 @@ window.openBookmarksInNewTab = {
                  PlacesUIUtils._openTabset.toSource().replace(
                      'if (where == "window") {',
                          <![CDATA[
-                             where = window..OpenBookmarksInNewTab.convertWhereToOpenLink(where, aEvent);
+                             where = window.OpenBookmarksInNewTab.convertWhereToOpenLink(where, aEvent);
                              $&
                          ]]>
                  )
