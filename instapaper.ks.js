@@ -25,12 +25,13 @@ function post(tab, cm){
     // var tab = gBrowser.selectedTab;
     var url = tab.linkedBrowser.contentWindow.location.href;
     var title = tab.label;
-    var username = "8slashes+instapaper@gmail.com";
+    var username = "";
     var password = "";
     var passwordManager = (Cc["@mozilla.org/login-manager;1"].getService(Ci.nsILoginManager));
     var logins = passwordManager.findLogins({}, "http://www.instapaper.com", "", null);
     for (var i = 0; i < logins.length; i++) {
-        if (logins[i].username == username) {
+        if (logins[i].username != "") {
+            username = logins[i].username;
             password = logins[i].password;
             break;
         }
@@ -61,8 +62,7 @@ function post(tab, cm){
                           gBrowser.removeTab(tab);
                       } else{
                           display.echoStatusBar("Instapaper: Something wrong has happended!");
-                          if (window.loadURI) {
-                              loadURI("javascript:function%20iprl5(){var%20d=document,z=d.createElement('scr'+'ipt'),b=d.body,l=d.location;try{if(!b)throw(0);d.title='(Saving...)%20'+d.title;z.setAttribute('src',l.protocol+'//www.instapaper.com/j/mt8YO6Cuosmf?u='+encodeURIComponent(l.href)+'&t='+(new%20Date().getTime()));b.appendChild(z);}catch(e){alert('Please%20wait%20until%20the%20page%20has%20loaded.');}}iprl5();void(0)");
+                          url = "javascript:function%20iprl5(){var%20d=document,z=d.createElement('scr'+'ipt'),b=d.body,l=d.location;try{if(!b)throw(0);d.title='(Saving...)%20'+d.title;z.setAttribute('src',l.protocol+'//www.instapaper.com/j/mt8YO6Cuosmf?u='+encodeURIComponent(l.href)+'&t='+(new%20Date().getTime()));b.appendChild(z);}catch(e){alert('Please%20wait%20until%20the%20page%20has%20loaded.');}}iprl5();void(0)";
                           }
                       }
                   });
