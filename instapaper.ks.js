@@ -1,22 +1,24 @@
 var PLUGIN_INFO =
-    <KeySnailPlugin>
-    <name>instapaper</name>
-    <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/dig-url.ks.js</updateURL>
-    <description>dig url</description>
-    <version>0.1</version>
-    <author mail="" homepage="http://10sr.jottit.com/">10sr</author>
-    <license>NYSL</license>
-    <minVersion>1.0</minVersion>
-    <include>main</include>
-    <detail><![CDATA[
-            === Usage ===
-            Dig current url (or go up directory).
-            For example, when viewing http://example.com/foo/bar you can go up to http://example.com/foo or http://example.com.
-            ]]></detail>
+        <KeySnailPlugin>
+        <name>instapaper</name>
+        <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/instapaper.ks.js</updateURL>
+        <description>Post current page to instapaper</description>
+        <version>0.1</version>
+        <author mail="" homepage="http://10sr.jottit.com/">10sr</author>
+        <license>NYSL</license>
+        <minVersion>1.0</minVersion>
+        <include>main</include>
+        <detail><![CDATA[
+                === Usage ===
+        ]]></detail>
     </KeySnailPlugin>;
 
 function comment(tab){
-    prompt.read("Instapaper comment:", function(cm){ post(tab, cm); });
+    prompt.reader({
+        "message" : "Instapaper comment:",
+        "initialInput" : content.document.getSelection() || "",
+        "callback" : function (cm) { post(tab, cm); },
+    });
 }
 
 function post(tab, cm){
