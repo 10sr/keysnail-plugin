@@ -34,7 +34,7 @@ function post(tab, cm){
         }
     }
 
-    display.echoStatusBar("Instapaper: adding " + url + "...");
+    display.echoStatusBar("Instapaper: adding \"" + url + "\"...");
     util.httpPost("https://www.instapaper.com/api/add",
                   {
                       "username" : encodeURIComponent(username),
@@ -54,8 +54,8 @@ function post(tab, cm){
                           // } catch(e) {
                           //     // prevents runtime error on platforms that don't implement nsIAlertsService
                           // }
-                          display.showPopup(Instapaper, "Page " + title + " added successfully.");
-                          display.echoStatusBar("Instapaper: adding " + url + "...done.");
+                          display.showPopup("Instapaper", "Page \"" + title + "\" added successfully.");
+                          display.echoStatusBar("Instapaper: adding \"" + url + "\"...done.");
                           gBrowser.removeTab(tab);
                       } else{
                           display.echoStatusBar("Instapaper: Something wrong has happended!");
