@@ -3,7 +3,7 @@ var PLUGIN_INFO =
         <name>instapaper</name>
         <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/instapaper.ks.js</updateURL>
         <description>Post current page to instapaper</description>
-        <version>0.1</version>
+        <version>0.2</version>
         <author mail="" homepage="http://10sr.jottit.com/">10sr</author>
         <license>NYSL</license>
         <minVersion>1.0</minVersion>
@@ -22,7 +22,6 @@ function comment(tab){
 }
 
 function post(tab, cm){
-    // var tab = gBrowser.selectedTab;
     var url = tab.linkedBrowser.contentWindow.location.href;
     var title = tab.label;
     var username = "";
@@ -52,7 +51,7 @@ function post(tab, cm){
                           // var title = decodeURIComponent(xhr.getResponseHeader("X-Instapaper-Title")); //超文字化けする
                           display.showPopup("Instapaper", "Page \"" + title + "\" added successfully.");
                           display.echoStatusBar("Instapaper: adding \"" + url + "\"...done.");
-                          gBrowser.removeTab(tab);
+                          plugins.options["instapaper.close_after_post"] && gBrowser.removeTab(tab);
                       } else{
                           display.echoStatusBar("Instapaper: Something wrong has happended!");
                           gBrowser.selectedTab = gBrowser.addTab("http://www.instapaper.com/edit?url=" + encodeURIComponent(url) + 
