@@ -15,9 +15,9 @@ var PLUGIN_INFO =
 
 function comment(tab){
     prompt.reader({
-        "message" : "Instapaper comment:",
-        "initialInput" : content.document.getSelection() || "",
-        "callback" : function (cm) { post(tab, cm); },
+        message : "Instapaper comment:",
+        initialInput : content.document.getSelection() || "",
+        callback : function(cm){ post(tab, cm); },
     });
 }
 
@@ -37,29 +37,33 @@ function post(tab, cm){
     }
 
     display.echoStatusBar("Instapaper: adding \"" + url + "\"...");
-    util.httpPost("https://www.instapaper.com/api/add",
-                  {
-                      "username" : encodeURIComponent(username),
-                      "password" : password,
-                      "url" : encodeURIComponent(url),
-                      "title" : encodeURIComponent(title),
-                      "selection" : encodeURIComponent(cm),
-                  },
-                  function (xhr) {
-                      display.echoStatusBar(xhr.status);
-                      if (xhr.readyState == 4 && xhr.status == 201) {
-                          // var title = decodeURIComponent(xhr.getResponseHeader("X-Instapaper-Title")); //超文字化けする
-                          display.showPopup("Instapaper", "Page \"" + title + "\" added successfully.");
-                          display.echoStatusBar("Instapaper: adding \"" + url + "\"...done.");
-                          plugins.options["instapaper.close_after_post"] && gBrowser.removeTab(tab);
-                      } else{
-                          display.echoStatusBar("Instapaper: Something wrong has happended!");
-                          gBrowser.selectedTab = gBrowser.addTab("http://www.instapaper.com/edit?url=" + encodeURIComponent(url) + 
-                                                                 "&title=" + encodeURIComponent(title) + 
-                                                                 "&summary=" + encodeURIComponent(cm));
-                      }
-                  }
-                 );
+    util.requestGet("https://www.instapaper.com/api/add", {
+        params : {
+            // username : encodeURIComponent(username),
+            // password : encodeURIComponent(password),
+            url : encodeURIComponent(url),
+            title : encodeURIComponent(title),
+            selection : encodeURIComponent(cm),
+        },
+        header : {
+            Authorization : "Basic " + window.btoa(username + ":" + password),
+        },
+        callback : function(xhr){
+            display.echoStatusBar(xhr.status);
+            if (xhr.readyState == 4 && xhr.status == 201) {
+                // var title = decodeURIComponent(xhr.getResponseHeader("X-Instapaper-Title")); //超文字化けする
+                display.showPopup("Instapaper", "Page \"" + title + "\" added successfully.");
+                display.echoStatusBar("Instapaper: adding \"" + url + "\"...done.");
+                plugins.options["instapaper.close_after_post"] && gBrowser.removeTab(tab);
+            }else{
+                display.showPopup(xhr.status + "", xhr.status + "");
+                display.echoStatusBar("Instapaper: Something wrong has happended!");
+                gBrowser.selectedTab = gBrowser.addTab("http://www.instapaper.com/edit?url=" + encodeURIComponent(url) + 
+                                                       "&title=" + encodeURIComponent(title) + 
+                                                       "&summary=" + encodeURIComponent(cm));
+            }
+        },
+    });
 }
 
 plugins.withProvides(function (provide) {
