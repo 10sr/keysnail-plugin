@@ -56,7 +56,6 @@ function post(tab, cm){
                 display.echoStatusBar("Instapaper: adding \"" + url + "\"...done.");
                 plugins.options["instapaper.close_after_post"] && gBrowser.removeTab(tab);
             }else{
-                display.showPopup(xhr.status + "", xhr.status + "");
                 display.echoStatusBar("Instapaper: Something wrong has happended!");
                 gBrowser.selectedTab = gBrowser.addTab("http://www.instapaper.com/edit?url=" + encodeURIComponent(url) + 
                                                        "&title=" + encodeURIComponent(title) + 
