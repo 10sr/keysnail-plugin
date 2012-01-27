@@ -3,7 +3,7 @@ var PLUGIN_INFO =
         <name>instapaper</name>
         <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/instapaper.ks.js</updateURL>
         <description>Post current page to instapaper</description>
-        <version>0.2</version>
+        <version>0.3</version>
         <author mail="" homepage="http://10sr.jottit.com/">10sr</author>
         <license>NYSL</license>
         <minVersion>1.0</minVersion>
@@ -14,9 +14,12 @@ var PLUGIN_INFO =
     </KeySnailPlugin>;
 
 function comment(tab){
+    cmfunc = plugins.options["instapaper.initial_comment_function"] || function(){
+        return "";
+    };
     prompt.reader({
         message : "Instapaper comment:",
-        initialInput : content.document.getSelection() || "",
+        initialInput : content.document.getSelection() + cmfunc(),
         callback : function(cm){ post(tab, cm); },
     });
 }
