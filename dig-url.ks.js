@@ -3,7 +3,7 @@ var PLUGIN_INFO =
     <name>Dig-url</name>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/dig-url.ks.js</updateURL>
     <description>dig url</description>
-    <version>0.1</version>
+    <version>0.1.1</version>
     <author mail="" homepage="http://10sr.jottit.com/">10sr</author>
     <license>NYSL</license>
     <minVersion>1.0</minVersion>
@@ -16,7 +16,7 @@ var PLUGIN_INFO =
     </KeySnailPlugin>;
 
 function digURL(){
-    var url = window.content.location.href;
+    var url = window.content.location.href.replace(/\/$/, "");
     var re = plugins.options["dig_url.separater_regexp"] || /(\/|#)/;          // paren cannot be removed!
     var durl = [url,];
     var elem = url.split(re);
