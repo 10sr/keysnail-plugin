@@ -14,7 +14,7 @@ var PLUGIN_INFO =
     </KeySnailPlugin>;
 
 function comment(tab){
-    cmfunc = plugins.options["instapaper.initial_comment_function"] || function(){
+    var cmfunc = plugins.options["instapaper.initial_comment_function"] || function(){
         return "";
     };
     prompt.reader({
