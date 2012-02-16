@@ -18,31 +18,12 @@ var PLUGIN_INFO =
 
     How about having a coffee break?
 
-    To enable plugin just add to hook.
-
->||
-hook.addToHook("KeySnailInitialized",
-               function () {
-                   ext.exec("shiitake-enable-style");
-               });
-||<
-
     Thanks https://addons.mozilla.org/ja/firefox/addon/4298/
     ]]></detail>
     <detail lang="ja"><![CDATA[
 === 使い方 ===
 
     つ旦
-
-
-    以下のようにフックかけるといいと思います
-
->||
-hook.addToHook("KeySnailInitialized",
-               function () {
-                   ext.exec("shiitake-enable-style");
-               });
-||<
 
     感謝→ https://addons.mozilla.org/ja/firefox/addon/4298/
     ]]></detail>
