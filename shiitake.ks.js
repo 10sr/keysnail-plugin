@@ -4,7 +4,7 @@ var PLUGIN_INFO =
     <name lang="ja">中止ボタンがしいたけに見えて困る</name>
     <description>You should take a little rest!</description>
     <description lang="ja">少し休んでみては…？</description>
-    <version>0.3.2</version>
+    <version>0.3.3</version>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/shiitake.ks.js</updateURL>
     <author homepage="http://10sr.jottit.com">10sr</author>
     <iconURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.png</iconURL>
@@ -82,3 +82,7 @@ ext.add("shiitake-disable-style",
         function(){
             style.unregister(shiitakeStyle);
         }, "disable shiitake style");
+
+hook.addToHook('KeySnailInitialized', function () {
+    ext.exec("shiitake-enable-style");
+});
