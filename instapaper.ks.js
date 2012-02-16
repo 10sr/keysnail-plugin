@@ -6,7 +6,7 @@ var PLUGIN_INFO =
         <version>0.3</version>
         <author mail="" homepage="http://10sr.jottit.com/">10sr</author>
         <license>NYSL</license>
-        <minVersion>1.0</minVersion>
+        <minVersion>1.8.3</minVersion>
         <include>main</include>
         <detail><![CDATA[
                 === Usage ===
