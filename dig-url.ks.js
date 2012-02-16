@@ -2,20 +2,20 @@ var PLUGIN_INFO =
     <KeySnailPlugin>
     <name>Dig-url</name>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/dig-url.ks.js</updateURL>
-    <description>dig url</description>
-    <version>0.1.1</version>
+    <description>dig url (or go up directory)</description>
+    <version>0.1.2</version>
     <author mail="" homepage="http://10sr.jottit.com/">10sr</author>
     <license>NYSL</license>
     <minVersion>1.0</minVersion>
     <include>main</include>
     <detail><![CDATA[
-            === Usage ===
-            Dig current url (or go up directory).
+            === Overview ===
+            Dig current url.
             For example, when viewing http://example.com/foo/bar you can go up to http://example.com/foo or http://example.com.
             ]]></detail>
     </KeySnailPlugin>;
 
-function digURL(){
+function dig(){
     var url = window.content.location.href.replace(/\/$/, "");
     var re = plugins.options["dig_url.separater_regexp"] || /(\/|#)/;          // paren cannot be removed!
     var durl = [url,];
@@ -31,5 +31,5 @@ function digURL(){
 }
 
 plugins.withProvides(function (provide) {
-    provide("dig-url", digURL, "dig url with selector");
+    provide("dig-url", dig, "dig url with selector");
 }, PLUGIN_INFO);
