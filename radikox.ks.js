@@ -2,7 +2,7 @@ var PLUGIN_INFO =
     <KeySnailPlugin>
     <name>radikox</name>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/radikox.ks.js</updateURL>
-    <description>Controll radikox</description>
+    <description>Control radikox</description>
     <version>0.1</version>
     <author mail="" homepage="http://10sr.jottit.com/">10sr</author>
     <license>NYSL</license>
@@ -10,7 +10,7 @@ var PLUGIN_INFO =
     <include>main</include>
     <detail><![CDATA[
             === Overview ===
-            Controll radikox firefox extension from keysnail.
+            Control radikox firefox extension from keysnail.
             Radikox installation is required.
             https://addons.mozilla.org/ja/firefox/addon/radikox/
             ]]></detail>
