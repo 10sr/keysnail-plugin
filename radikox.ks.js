@@ -3,7 +3,7 @@ var PLUGIN_INFO =
     <name>radikox</name>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/radikox.ks.js</updateURL>
     <description>Control radikox</description>
-    <version>0.1</version>
+    <version>0.1.1</version>
     <author mail="" homepage="http://10sr.jottit.com/">10sr</author>
     <license>NYSL</license>
     <minVersion>1.0</minVersion>
@@ -93,10 +93,12 @@ function selectStation(){
     );
 }
 
-plugins.withProvides(function (provide) {
-    provide("radikox-play-pause", togglePlayPause, "radikox toggle play/pause");
-    provide("radikox-play", playRadiko, "radikox play");
-    provide("radikox-pause", pauseRadiko, "radikox pause");
-    provide("radikox-select-station", selectStation, "radikox select station with selector");
-    provide("radikox-display-info", displayInfo, "radikox display info");
-}, PLUGIN_INFO);
+if('radikox' in window){
+    plugins.withProvides(function (provide) {
+        provide("radikox-play-pause", togglePlayPause, "radikox toggle play/pause");
+        provide("radikox-play", playRadiko, "radikox play");
+        provide("radikox-pause", pauseRadiko, "radikox pause");
+        provide("radikox-select-station", selectStation, "radikox select station with selector");
+        provide("radikox-display-info", displayInfo, "radikox display info");
+    }, PLUGIN_INFO);
+}
