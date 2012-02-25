@@ -17,30 +17,45 @@ var PLUGIN_INFO =
     ]]></detail>
     </KeySnailPlugin>;
 
-function loadScript(s){
+function execScript(s){
     window.content.location.href = "javascript:" + encodeURIComponent(s);
 }
 
 function twicliSwitchTL(){
-    loadScript("switchTL()");
+    execScript("switchTL()");
 }
 
 function twicliSwitchReply(){
-    loadScript("switchReply()");
+    execScript("switchReply()");
 }
 
 function twicliSwitchUser(){
     prompt.reader({
         message : "User:",
         callback : function(user){
-        loadScript("switchUser(\"" + user + "\")");
+            execScript("switchUser(\"" + user + "\")");
         }
     });
+}
+
+function twicliSearch(){
+    prompt.reader({
+        message : "Search query:",
+        callback : function(q){
+            execScript("twsSearch(\"" + q + "\")");
+        }
+    });
+}
+
+function twicliUpdateList(){
+    execScript("twlGetListStatus()");
 }
 
 plugins.withProvides(function (provide) {
     provide("twicli-switch-TL", twicliSwitchTL, "switch to tl");
     provide("twicli-switch-reply", twicliSwitchReply, "switch to tl");
     provide("twicli-switch-user", twicliSwitchUser, "switch to tl");
+    // provide("twicli-search", twicliSearch, "switch to tl");
+    // provide("twicli-update list", twicliUpdateList, "switch to tl");
 }, PLUGIN_INFO);
 
