@@ -3,7 +3,7 @@ var PLUGIN_INFO =
     <name>radikox</name>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/radikox.ks.js</updateURL>
     <description>Control radikox</description>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <author mail="" homepage="http://10sr.jottit.com/">10sr</author>
     <license>NYSL</license>
     <minVersion>1.0</minVersion>
@@ -39,18 +39,17 @@ function isPlaying(){
 }
 
 function displayInfo(){
+    var s;
     if(isPlaying()){
         var i = getInfo(radikox.currentPlayer, radikox.currentStation)[0];
-        display.prettyPrint("Radikox : " + 
-                            radikox[radikox.currentPlayer].stationDict[radikox.currentStation] + 
-                            (i ? " " + i : "") , {
-                                timeout : 5 * 1000
-                            });
+        s = radikox[radikox.currentPlayer].stationDict[radikox.currentStation] + (i ? " : " + i : "");
     }else{
-        display.prettyPrint("Radikox : Not Playing.", {
-            timeout : 5 * 1000
-        });
+        s = "Not Playing.";
     }
+    // display.prettyPrint("Radikox : Not Playing.", {
+    //     timeout : 5 * 1000
+    // });
+    display.showPopup("Radikox", s);
 }
 
 function getInfo(p, s){
