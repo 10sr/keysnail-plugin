@@ -6,7 +6,7 @@ var PLUGIN_INFO =
     <description lang="ja">少し休んでみては…？</description>
     <version>0.3.3</version>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/shiitake.ks.js</updateURL>
-    <author homepage="http://10sr.jottit.com">10sr</author>
+    <author homepage="http://10sr.github.com">10sr</author>
     <iconURL>https://github.com/10sr/keysnail-plugin/raw/master/shiitake.png</iconURL>
     <provides> <ext>shiitake-toggle-style</ext><ext>shiitake-enable-style</ext><ext>shiitake-disable-style</ext> </provides>
     <license>MPL 1.1</license>

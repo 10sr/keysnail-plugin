@@ -4,7 +4,7 @@ var PLUGIN_INFO =
     <description>auto jump on pixiv page</description>
     <version>0.1</version>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/pixiv_autojump.ks.js</updateURL>
-    <author homepage="http://10sr.jottit.com">10sr</author>
+    <author homepage="http://10sr.github.com">10sr</author>
     <license>NYSL</license>
     <license lang="ja">MPL 1.1</license>
     <minVersion>1.0</minVersion>

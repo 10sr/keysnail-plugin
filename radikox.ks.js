@@ -4,7 +4,7 @@ var PLUGIN_INFO =
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/radikox.ks.js</updateURL>
     <description>Control radikox</description>
     <version>0.1.2</version>
-    <author mail="" homepage="http://10sr.jottit.com/">10sr</author>
+    <author mail="" homepage="http://10sr.github.com/">10sr</author>
     <license>NYSL</license>
     <minVersion>1.0</minVersion>
     <include>main</include>
