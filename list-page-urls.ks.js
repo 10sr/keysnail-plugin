@@ -3,7 +3,7 @@ var PLUGIN_INFO =
     <name>list-page-urls</name>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/list-page-urls.ks.js</updateURL>
     <description>list url of current page</description>
-    <version>0.1</version>
+    <version>0.2</version>
     <author mail="" homepage="http://10sr.github.com/">10sr</author>
     <license>NYSL</license>
     <minVersion>1.0</minVersion>
