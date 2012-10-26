@@ -14,7 +14,7 @@ var PLUGIN_INFO =
             ]]></detail>
     </KeySnailPlugin>;
 
-function listurl(){
+function gen_list(){
     // window.content.document.links
     var urls = [];
     var aa = window.content.document.getElementsByTagName("a");
@@ -32,6 +32,19 @@ function listurl(){
         urls.push([text, decodeURIComponent(aa[i].href)]);
     }
 
+    return urls;
+
+}
+
+function copyurls(){
+    urls = [a[1] + "\n" for each(a in gen_list())].join("");
+
+    command.setClipboardText(urls, false);
+}
+
+function selecturl(){
+    urls = gen_list();
+
     if(urls.length == 0){
         display.echoStatusBar("No url found.");
         return;
@@ -45,12 +58,14 @@ function listurl(){
             header : ["text", "url"],
             callback   : function (i) {
                 if (i >= 0)
-                    openUILinkIn(urls[i][1], "tab"); // or current tabshifted window
+                    openUILinkIn(urls[i][1], "tab");
+                    // or current tabshifted window
             }
         }
     );
 }
 
 plugins.withProvides(function (provide) {
-    provide("list-page-urls", listurl, "list urls of current page");
+    provide("list-page-urls", selecturl, "list urls of current page and select");
+    provide("copy-page-urls", copyurls, "copy list of urls of current page");
 }, PLUGIN_INFO);
