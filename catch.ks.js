@@ -1,39 +1,55 @@
 var PLUGIN_INFO =
         <KeySnailPlugin>
         <name>catch</name>
-        <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/catch.ks.js</updateURL>
-        <description>Post current page to catch</description>
-        <version>0.1</version>
-        <author mail="" homepage="http://10sr.github.com/">10sr</author>
-        <license>NYSL</license>
-        <minVersion>1.8.3</minVersion>
-        <include>main</include>
-        <detail><![CDATA[
-                === Usage ===
-        ]]></detail>
+        <updateURL>
+        https://raw.github.com/10sr/keysnail-plugin/master/catch.ks.js
+    </updateURL>
+    <description>Post current page to catch</description>
+    <version>0.1</version>
+    <author mail="" homepage="http://10sr.github.com/">10sr</author>
+    <license>NYSL</license>
+    <minVersion>1.8.3</minVersion>
+    <include>main</include>
+    <detail><![CDATA[
+            === Usage ===
+    ]]></detail>
     </KeySnailPlugin>;
 
-// function req(met, url, params){
-//     util.request(met, "https://api.catch.com/v2/" + url, params);
-// }
-
 const AUTH_PREF = "extensions.keysnail.plugins.catch.auth.token";
+const CATCH_URL = "https://api.catch.com/v3";
 
-function req(met, url, opts){
-    // opts = opts || {};
-    // opts.params = opts.params || {};
-    // opts.params["bearer_token"] = util.getUnicharPref(pref_key) || "";
+function reqURL(met, url, opts){
+    // var token = util.getUnicharPref(AUTH_PREF) || "";
+    var uname = "";
+    var passwd = "";
+    var passwordManager = (Cc["@mozilla.org/login-manager;1"].
+                           getService(Ci.nsILoginManager));
+    var logins = passwordManager.findLogins({}, "https://catch.com", "", null);
+    for (var i = 0; i < logins.length; i++) {
+        if (logins[i].username != "") {
+            uname = logins[i].username;
+            passwd = logins[i].password;
+            break;
+        }
+    }
 
-    // util.request(met, "https://api.catch.com/v2/" + url, opts); 
+    opts = opts || {};
+    opts.header = opts.header || {};
+    opts.header["Authorization"] = "Basic " + window.btoa(uname + ":" + passwd);
 
-    var token = util.getUnicharPref(AUTH_PREF) || "";
-    util.request(met, "https://api.catch.com/v2/" + url + "?" + "bearer_token=" + token, opts);
+    // alert(username + password);
+    if (met == "get") {
+        util.requestGet(CATCH_URL + url, opts);
+    } else if (met == "post") {
+        util.requestPost(CATCH_URL + url, opts);
+    }
 }
 
-function get_token(){
+function _getToken(){
     var username = "";
     var password = "";
-    var passwordManager = (Cc["@mozilla.org/login-manager;1"].getService(Ci.nsILoginManager));
+    var passwordManager = (Cc["@mozilla.org/login-manager;1"].
+                           getService(Ci.nsILoginManager));
     var logins = passwordManager.findLogins({}, "https://catch.com", "", null);
     for (var i = 0; i < logins.length; i++) {
         if (logins[i].username != "") {
@@ -61,104 +77,39 @@ function get_token(){
     });
 }
 
-function post_note(text, mode){
-    req("POST", "notes.json", {
+function postNoteToDefault(text){
+    reqURL("post", "/streams/default", {
         params : {
-            source : "catch.ks.js",
-            text : text,
-            mode : mode || "private"
+            text : encodeURIComponent(text)
         },
         callback : function(xhr){
             if(xhr.readyState === 4 && xhr.status === 200){
-                display.showPopup("Catch", "post done");
+                display.showPopup("Catch", "Post done.");
+                // var json = util.safeEval("(" + xhr.responseText + ")");
+                // alert(json.user.auth_token);
             }else{
-                display.showPopup("Catch", "error!" + xhr.status.toString());
+                display.showPopup("Catch", "Error! " + xhr.status.toString());
+                // alert(xhr.responseText);
             }
         }
     });
 }
 
-function get_notes(){
-    req("GET", "notes.json", {
-        callback : function(xhr){
-            if(xhr.readyState === 4 && xhr.status === 200){
-                display.showPopup("Catch", "post done");
-                alert(xhr.responseText);
-            }else{
-                display.showPopup("Catch", "error!" + xhr.status.toString());
-            }
-        }
-    });
-}
-
-function comment(tab){
-    var cmfunc = plugins.options["catch.initial_comment_function"] || function(){
-        return "";
-    };
+function postCurrentTabWithComment(){
+    var tab = gBrowser.selectedTab;
+    var url = tab.linkedBrowser.contentWindow.location.href;
+    var title = tab.label;
     prompt.reader({
         message : "Catch comment:",
-        initialInput : content.document.getSelection() + cmfunc(),
-        callback : function(cm){ post(tab, cm); }
-    });
-}
-
-function post(){
-    // var url = tab.linkedBrowser.contentWindow.location.href;
-    var url = window.content.location.href;
-    // var title = tab.label;
-    var username = "";
-    var password = "";
-    var passwordManager = (Cc["@mozilla.org/login-manager;1"].getService(Ci.nsILoginManager));
-    var logins = passwordManager.findLogins({}, "https://catch.com", "", null);
-    for (var i = 0; i < logins.length; i++) {
-        if (logins[i].username != "") {
-            username = logins[i].username;
-            password = logins[i].password;
-            break;
-        }
-    }
-
-    // alert(username + password);
-    display.echoStatusBar("Catch: adding \"" + url + "\"...");
-    util.requestPost("https://api.catch.com/v3/streams/default", {
-        params : {
-            // username : encodeURIComponent(username),
-            // password : encodeURIComponent(password),
-            text : encodeURIComponent(url)
-            // title : encodeURIComponent(title),
-            // selection : encodeURIComponent(cm),
-        },
-        header : {
-            Authorization : "Basic " + window.btoa(username + ":" + password)
-        },
-        callback : function(xhr){
-            display.echoStatusBar(xhr.status);
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // var title = decodeURIComponent(xhr.getResponseHeader("X-Catch-Title")); //超文字化けする
-                display.showPopup("Catch", "Page \"" + title + "\" added successfully.");
-                display.echoStatusBar("Catch: adding \"" + url + "\"...done.");
-                // plugins.options["catch.close_after_post"] && gBrowser.removeTab(tab);
-                var json = util.safeEval("(" + xhr.responseText + ")");
-                alert(json.user.auth_token);
-            }else{
-                display.showPopup("Catch", "failed!");
-                // display.echoStatusBar("Catch: Something wrong has happended!");
-                // gBrowser.selectedTab = gBrowser.addTab("http://www.catch.com/edit?url=" + encodeURIComponent(url) + 
-                //                                        "&title=" + encodeURIComponent(title) + 
-                //                                        "&summary=" + encodeURIComponent(cm));
-            }
+        initialInput : window.content.document.getSelection(),
+        callback : function(cm){
+            postNoteToDefault([title, url, cm].join("\n"));
         }
     });
 }
 
 plugins.withProvides(function (provide) {
-    provide("catch-authenticate", function(){
-        get_token();
-    }, "catch authenticate");
     provide("catch-post-url", function(){
-        post();
+        postCurrentTabWithComment();
     }, "post url");
-    provide("catch-get-notes", function(){
-        get_notes();
-    }, "get notes");
 }, PLUGIN_INFO);
