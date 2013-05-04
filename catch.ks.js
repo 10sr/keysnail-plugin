@@ -5,7 +5,7 @@ var PLUGIN_INFO =
         https://raw.github.com/10sr/keysnail-plugin/master/catch.ks.js
     </updateURL>
     <description>Post current page to catch</description>
-    <version>0.1</version>
+    <version>0.2</version>
     <author mail="" homepage="http://10sr.github.com/">10sr</author>
     <license>NYSL</license>
     <minVersion>1.8.3</minVersion>
@@ -18,6 +18,13 @@ var PLUGIN_INFO =
 const AUTH_PREF = "extensions.keysnail.plugins.catch.auth.token";
 const CATCH_URL = "https://api.catch.com/v3";
 
+/**
+ * Request to catch.com.
+ * @param {string} met Http Method like "POST" or "GET".
+ * @param {string} url URL like "/streams/default".
+ * @param {object} opts Object for request. Have members like "header", "parmas"
+ *     and "callback".
+ */
 function reqURL(met, url, opts){
     // var token = util.getUnicharPref(AUTH_PREF) || "";
     var uname = "";
@@ -38,6 +45,7 @@ function reqURL(met, url, opts){
     opts.header["Authorization"] = "Basic " + window.btoa(uname + ":" + passwd);
 
     // alert(username + password);
+    met = met.toLowerCase();
     if (met == "get") {
         util.requestGet(CATCH_URL + url, opts);
     } else if (met == "post") {
@@ -77,6 +85,10 @@ function _getToken(){
     });
 }
 
+/**
+ * Post text to catch.com.
+ * @param {string} text Text to post.
+ */
 function postNoteToDefault(text){
     reqURL("post", "/streams/default", {
         params : {
@@ -95,6 +107,9 @@ function postNoteToDefault(text){
     });
 }
 
+/**
+ * Post current tab with comment.
+ */
 function postCurrentTabWithComment(){
     var tab = gBrowser.selectedTab;
     var url = tab.linkedBrowser.contentWindow.location.href;
@@ -111,5 +126,5 @@ function postCurrentTabWithComment(){
 plugins.withProvides(function (provide) {
     provide("catch-post-url", function(){
         postCurrentTabWithComment();
-    }, "post url");
+    }, "Post current url and title to catch.com default streams with comment.");
 }, PLUGIN_INFO);
