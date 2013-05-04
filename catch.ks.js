@@ -17,22 +17,20 @@ var PLUGIN_INFO =
 //     util.request(met, "https://api.catch.com/v2/" + url, params);
 // }
 
-function req(met, url, opts){
-    var pref_key = "extensions.keysnail.plugins.catch.auth.token";
+const AUTH_PREF = "extensions.keysnail.plugins.catch.auth.token";
 
+function req(met, url, opts){
     // opts = opts || {};
     // opts.params = opts.params || {};
     // opts.params["bearer_token"] = util.getUnicharPref(pref_key) || "";
 
     // util.request(met, "https://api.catch.com/v2/" + url, opts); 
 
-    var token = util.getUnicharPref(pref_key) || "";
+    var token = util.getUnicharPref(AUTH_PREF) || "";
     util.request(met, "https://api.catch.com/v2/" + url + "?" + "bearer_token=" + token, opts);
 }
 
 function get_token(){
-    var pref_key = "extensions.keysnail.plugins.catch.auth.token";
-
     var username = "";
     var password = "";
     var passwordManager = (Cc["@mozilla.org/login-manager;1"].getService(Ci.nsILoginManager));
@@ -47,14 +45,14 @@ function get_token(){
     display.echoStatusBar("Catch: authenticating...");
     util.request("POST", "https://api.catch.com/v2/user.json", {
         header : {
-            Authorization : "Basic " + window.btoa(username + ":" + password),
+            Authorization : "Basic " + window.btoa(username + ":" + password)
         },
         callback : function(xhr){
             if (xhr.readyState === 4 && xhr.status === 200) {
                 display.showPopup("Catch", "Authentication done.");
                 display.echoStatusBar("Catch: Authenticating...done.");
                 var json = util.safeEval("(" + xhr.responseText + ")");
-                util.setUnicharPref(pref_key, json.user.auth_token);
+                util.setUnicharPref(AUTH_PREF, json.user.auth_token);
             }else{
                 display.showPopup("Catch", "Failed to authenticate!");
                 display.echoStatusBar("Catch: Failed to authenticate!");
@@ -100,13 +98,14 @@ function comment(tab){
     prompt.reader({
         message : "Catch comment:",
         initialInput : content.document.getSelection() + cmfunc(),
-        callback : function(cm){ post(tab, cm); },
+        callback : function(cm){ post(tab, cm); }
     });
 }
 
-function post(tab, cm){
-    var url = tab.linkedBrowser.contentWindow.location.href;
-    var title = tab.label;
+function post(){
+    // var url = tab.linkedBrowser.contentWindow.location.href;
+    var url = window.content.location.href;
+    // var title = tab.label;
     var username = "";
     var password = "";
     var passwordManager = (Cc["@mozilla.org/login-manager;1"].getService(Ci.nsILoginManager));
@@ -121,16 +120,16 @@ function post(tab, cm){
 
     // alert(username + password);
     display.echoStatusBar("Catch: adding \"" + url + "\"...");
-    util.requestPost("https://api.catch.com/v2/user.json", {
+    util.requestPost("https://api.catch.com/v3/streams/default", {
         params : {
             // username : encodeURIComponent(username),
             // password : encodeURIComponent(password),
-            url : encodeURIComponent(url),
-            title : encodeURIComponent(title),
-            selection : encodeURIComponent(cm),
+            text : encodeURIComponent(url)
+            // title : encodeURIComponent(title),
+            // selection : encodeURIComponent(cm),
         },
         header : {
-            Authorization : "Basic " + window.btoa(username + ":" + password),
+            Authorization : "Basic " + window.btoa(username + ":" + password)
         },
         callback : function(xhr){
             display.echoStatusBar(xhr.status);
@@ -155,11 +154,11 @@ function post(tab, cm){
 plugins.withProvides(function (provide) {
     provide("catch-authenticate", function(){
         get_token();
-    }, "post page");
+    }, "catch authenticate");
     provide("catch-post-url", function(){
-        post_note(window.content.location.href);
-    }, "post page and comment");
+        post();
+    }, "post url");
     provide("catch-get-notes", function(){
         get_notes();
-    }, "post page and comment");
+    }, "get notes");
 }, PLUGIN_INFO);
