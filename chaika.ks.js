@@ -68,7 +68,7 @@ function getBaseURL(){
 }
 
 function showLatest50(){
-    window.content.location.href = getBaseURL + "/l50";
+    window.content.location.href = getBaseURL() + "/l50";
 }
 
 plugins.withProvides(function (provide) {
