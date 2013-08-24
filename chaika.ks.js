@@ -22,7 +22,7 @@ function evalCode(s){
 
 function openPostWindow(res){
     var curl = window.content.location.href;
-    var kurl = curl.replqce(/http:.*thread\/(.*\/).*/, "chaika://post/$1");
+    var kurl = curl.replace(/http:.*thread\/(.*\/).*/, "chaika://post/$1");
     // window.content.location.href = kurl;
     window.content.location.href = kurl;
 }
