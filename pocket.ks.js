@@ -46,7 +46,7 @@ function reqPocket(path, method, opts){
     opts.header["Content-Type"] =
         "application/x-www-form-urlencoded; charset=UTF=8";
     opts.header["X-Accept"] = "application/json";
-    return util.request(method,
+    return util.request(method.toUpperCase(),
                         URL + path,
                         opts);
 }

@@ -37,13 +37,13 @@ function gen_list(){
 }
 
 function copyurls(){
-    urls = [a[1] + "\n" for each(a in gen_list())].join("");
+    var urls = [a[1] + "\n" for each(a in gen_list())].join("");
 
     command.setClipboardText(urls, false);
 }
 
 function selecturl(){
-    urls = gen_list();
+    var urls = gen_list();
 
     if(urls.length == 0){
         display.echoStatusBar("No url found.");

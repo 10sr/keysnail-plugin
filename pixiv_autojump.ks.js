@@ -19,7 +19,8 @@ var PLUGIN_INFO =
 
 hook.addToHook('LocationChange', function (aNsURI) {
     const P_RX = /^http:\/\/www\.pixiv\.net\/jump\.php\?/;
-    if(P_RX.test(aNsURI.spec)){
-        window.content.location.href = decodeURIComponent(aNsURI.spec.replace(P_RX, ""));
+    if (P_RX.test(aNsURI.spec)) {
+        window.content.location.href =
+            decodeURIComponent(aNsURI.spec.replace(P_RX, ""));
     }
 });

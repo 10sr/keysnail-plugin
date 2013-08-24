@@ -14,9 +14,10 @@ var PLUGIN_INFO =
     </KeySnailPlugin>;
 
 function postWithComment(tab){
-    var cmfunc = plugins.options["instapaper.initial_comment_function"] || function(){
-        return "";
-    };
+    var cmfunc = plugins.options["instapaper.initial_comment_function"] ||
+            function(){
+                return "";
+            };
     prompt.reader({
         message : "Instapaper comment:",
         initialInput : content.document.getSelection() + cmfunc(),
@@ -29,8 +30,10 @@ function postTab(tab, cm){
     var title = tab.label;
     var username = "";
     var password = "";
-    var passwordManager = (Cc["@mozilla.org/login-manager;1"].getService(Ci.nsILoginManager));
-    var logins = passwordManager.findLogins({}, "http://www.instapaper.com", "", null);
+    var passwordManager = (Cc["@mozilla.org/login-manager;1"].
+                           getService(Ci.nsILoginManager));
+    var logins = passwordManager.findLogins({}, "http://www.instapaper.com",
+                                            "", null);
     for (var i = 0; i < logins.length; i++) {
         if (logins[i].username != "") {
             username = logins[i].username;

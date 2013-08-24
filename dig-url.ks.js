@@ -26,7 +26,9 @@ function dig(){
     }
     prompt.selector({ message : "dig " + url,
                       collection : durl,
-                      callback : function (i) { window.content.location.href = durl[i]; },
+                      callback : function (i) {
+                          window.content.location.href = durl[i];
+                      }
                     });
 }
 
