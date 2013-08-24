@@ -2,7 +2,7 @@ var PLUGIN_INFO =
         <KeySnailPlugin>
         <name>chaika</name>
         <description>chaika keysnail plugin</description>
-        <version>0.1</version>
+        <version>0.1.1</version>
         <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/chaika.ks.js</updateURL>
         <author homepage="http://10sr.github.com">10sr</author>
         <license>NYSL 0.9982</license>
@@ -79,7 +79,7 @@ function enableDigest(){
     evalCode("Digest.enabled()");
 }
 
-function showInBrowser(){
+function openInBrowser(){
     evalCode("ThreadDocument.showBrowser()");
 }
 
@@ -105,6 +105,21 @@ function showLatest(){
     });
 }
 
+function openInChaika(){
+    document.getElementById("chaika-thread-toolbaritem")._viewChaika();
+}
+
+function goToBorad(){
+    window.content.location.href =
+        window.content.document.
+        getElementById("boardName").getAttribute("href");
+}
+
+function scrollToNew(){
+    evalCode("ThreadDocument.scrollToNewRes()");
+}
+
+
 plugins.withProvides(function (provide) {
     // provide("instapaper-post-page-with-comment", function(){
     //     postWithComment(gBrowser.selectedTab);
@@ -116,7 +131,11 @@ plugins.withProvides(function (provide) {
     provide("chaika-show-first-10", showFirst10, "show first 10");
     provide("chaika-show-all", showAll, "show all");
     provide("chaika-enable-digest", enableDigest, "enable digest");
-    provide("chaika-show-in-browser", showInBrowser, "show in browser");
+    provide("chaika-open-in-browser", openInBrowser, "open in browser");
     provide("chaika-jump-to", jumpTo, "prompt num to jump to");
     provide("chaika-show-latest", showLatest, "prompt num and show latest");
+
+    provide("chaika-open-in-chaika", openInChaika, "open in chaika");
+    provide("chaika-goto-board", goToBorad, "go to ita");
+    provide("chaika-scroll-to-new", scrollToNew, "scroll to new res");
 }, PLUGIN_INFO);
