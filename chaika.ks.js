@@ -16,8 +16,24 @@ var PLUGIN_INFO =
         ]]></detail>
     </KeySnailPlugin>;
 
+
 function evalCode(s){
     window.loadURI("javascript:" + encodeURIComponent(s));
+}
+
+function getBaseURL(){
+    // http://127.0.0.1:8803/thread/http://anago.2ch.net/test/read.cgi/
+    // applism/1376548627/l10
+    // =>
+    // http://127.0.0.1:8803/thread/http://anago.2ch.net/test/read.cgi/
+    // applism/1376548627
+    return window.content.location.href.match(
+            /^[^/]*\/\/[^/]*\/[^/]*\/[^/]*\/\/[^/]*\/[^/]*\/[^/]*\/[^/]*\/[^/]*/
+    );
+}
+function randomizePort(){
+    util.setIntPref("extensions.chaika.server_port.firefox",
+                    8800 + Math.floor(Math.random() * 30));
 }
 
 function openPostWindow(res){
@@ -27,15 +43,9 @@ function openPostWindow(res){
     window.content.location.href = kurl;
 }
 
-function randomizePort(){
-    util.setIntPref("extensions.chaika.server_port.firefox",
-                    8800 + Math.floor(Math.random() * 30));
-}
-
 function reloadPage(){
-    window.BrowserReload();
+    evalCode("ThreadDocument.reload()");
 }
-
 
 function readFind(){
     function find(s){
@@ -52,31 +62,61 @@ function readFind(){
     });
 }
 
+function showLatest50(){
+    window.content.location.href = getBaseURL() + "/l50";
+}
+
+function showFirst10(){
+    window.content.location.href = getBaseURL() + "/1-10";
+}
+
 function showAll(){
     evalCode("ThreadDocument.showAll()");
 }
 
-function getBaseURL(){
-    // http://127.0.0.1:8803/thread/http://anago.2ch.net/test/read.cgi/
-    // applism/1376548627/l10
-    // =>
-    // http://127.0.0.1:8803/thread/http://anago.2ch.net/test/read.cgi/
-    // applism/1376548627
-    return window.content.location.href.match(
-            /^[^/]*\/\/[^/]*\/[^/]*\/[^/]*\/\/[^/]*\/[^/]*\/[^/]*\/[^/]*\/[^/]*/
-    );
+
+function enableDigest(){
+    evalCode("Digest.enabled()");
 }
 
-function showLatest50(){
-    window.content.location.href = getBaseURL() + "/l50";
+function showInBrowser(){
+    evalCode("ThreadDocument.showBrowser()");
+}
+
+function jumpTo(){
+    prompt.reader({
+        message : "Num to jump to",
+        callback : function(s){
+            if (s) {
+                evalCode("ThreadDocument.DirectjumpTo(" + s + ")");
+            }
+        }
+    });
+}
+
+function showLatest(){
+    prompt.reader({
+        message : "Num to show latest",
+        callback : function(s){
+            if (s) {
+                window.content.location.href = getBaseURL() + "/l" + s;
+            }
+        }
+    });
 }
 
 plugins.withProvides(function (provide) {
     // provide("instapaper-post-page-with-comment", function(){
     //     postWithComment(gBrowser.selectedTab);
     // }, "post page and comment");
-    provide("chaika-find", readFind, "chaika find");
-    provide("chaika-post", openPostWindow, "chaika post");
-    provide("chaika-show-all", showAll, "chaika show all");
-    provide("chaika-show-latest-50", showLatest50, "chaika show latest 50");
+    provide("chaika-post", openPostWindow, "post");
+    provide("chaika-reload", reloadPage, "reload");
+    provide("chaika-find", readFind, "find");
+    provide("chaika-show-latest-50", showLatest50, "show latest 50");
+    provide("chaika-show-first-10", showFirst10, "show first 10");
+    provide("chaika-show-all", showAll, "show all");
+    provide("chaika-enable-digest", enableDigest, "enable digest");
+    provide("chaika-show-in-browser", showInBrowser, "show in browser");
+    provide("chaika-jump-to", jumpTo, "prompt num to jump to");
+    provide("chaika-show-latest", showLatest, "prompt num and show latest");
 }, PLUGIN_INFO);
