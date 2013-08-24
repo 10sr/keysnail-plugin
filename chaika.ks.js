@@ -24,7 +24,7 @@ function openPostWindow(res){
     var curl = window.content.location.href;
     var kurl = curl.replqce(/http:.*thread\/(.*\/).*/, "chaika://post/$1");
     // window.content.location.href = kurl;
-    window.loadURI(kurl);
+    window.content.location.href = kurl;
 }
 
 function randomizePort(){
@@ -68,7 +68,7 @@ function getBaseURL(){
 }
 
 function showLatest50(){
-    window.loadURI(getBaseURL + "/l50");
+    window.content.location.href = getBaseURL + "/l50";
 }
 
 plugins.withProvides(function (provide) {
