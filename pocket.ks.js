@@ -130,7 +130,7 @@ function authPocket(){
     );
 }
 
-function addTab(tab, cm){
+function addTab(tab){
     var url = tab.linkedBrowser.contentWindow.location.href;
     var title = tab.label;
 
@@ -155,12 +155,35 @@ function addTab(tab, cm){
     );
 }
 
+function addCurrentTab(){
+    addTab(gBrowser.selectedTab);
+}
+
+function getData(num){
+    reqPocketWithAuth(
+        "/v3/get",
+        "POST",
+        {
+            params : {
+                count : num.toString()
+            },
+            callback : function(xhr){
+                if (xhr.status == 200) {
+                    alert(xhr.responseText);
+                } else {
+                    showPopup("Failed to get data!");
+                }
+            }
+        }
+    );
+}
+
+function getLatest10(){
+    getData(10);
+}
+
 plugins.withProvides(function (provide) {
-    provide("pocket-add-tab", function(){
-        addTab(gBrowser.selectedTab, "");
-    }, "Add current page");
-    // provide("instapaper-post-page-with-comment", function(){
-    //     postWithComment(gBrowser.selectedTab);
-    // }, "post page and comment");
-    provide("pocket-authenticate", authPocket, "auth pocket");
+    provide("pocket-add-tab", addCurrentTab, "Add current page");
+    provide("pocket-authenticate", authPocket, "Auth pocket");
+    provide("pocket-get-latest-10", getLatest10, "Get latest 10 data");
 }, PLUGIN_INFO);
