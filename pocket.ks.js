@@ -100,7 +100,7 @@ function authPocket(){
 
     function waitAuthAndGetAccToken(reqtoken){
         prompt.reader({
-            message : "Emit after authentication finished",
+            message : "Emit after authorization finished",
             callback : function(text){
                 getAccToken(reqtoken);
             }
@@ -123,7 +123,7 @@ function authPocket(){
                     waitAuthAndGetAccToken(reqtoken);
                     openAuthTab(redirect_uri, reqtoken);
                 } else {
-                    showPopup("Failed to authenticate! " + xhr.responseText);
+                    showPopup("Failed to authorize! " + xhr.responseText);
                 }
             }
         }
