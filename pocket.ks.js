@@ -3,7 +3,7 @@ var PLUGIN_INFO =
         <name>pocket</name>
         <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/pocket.ks.js</updateURL>
         <description>pocket keysnail plugin</description>
-        <version>0.1</version>
+        <version>0.1.1</version>
         <author mail="" homepage="http://10sr.github.com/">10sr</author>
         <license>NYSL</license>
         <minVersion>1.8.3</minVersion>
@@ -54,7 +54,7 @@ function reqPocket(path, method, opts){
 function reqPocketWithAuth(path, method, opts){
     var acctoken = getUnicharPref("access_token");
     if (! acctoken) {
-        showPopup("Not authorized yet. Use \"pocket-authenticate\".");
+        showPopup("Not authorized yet. Use \"pocket-authorize\".");
     } else {
         opts = opts || {};
         opts.params = opts.params || {};
@@ -100,7 +100,7 @@ function authPocket(){
 
     function waitAuthAndGetAccToken(reqtoken){
         prompt.reader({
-            message : "Emit after authentication finished",
+            message : "Emit after authorization finished",
             callback : function(text){
                 getAccToken(reqtoken);
             }
@@ -123,7 +123,7 @@ function authPocket(){
                     waitAuthAndGetAccToken(reqtoken);
                     openAuthTab(redirect_uri, reqtoken);
                 } else {
-                    showPopup("Failed to authenticate! " + xhr.responseText);
+                    showPopup("Failed to authorize! " + xhr.responseText);
                 }
             }
         }
@@ -184,6 +184,6 @@ function getLatest10(){
 
 plugins.withProvides(function (provide) {
     provide("pocket-add-tab", addCurrentTab, "Add current page");
-    provide("pocket-authenticate", authPocket, "Auth pocket");
+    provide("pocket-authorize", authPocket, "Auth pocket");
     provide("pocket-get-latest-10", getLatest10, "Get latest 10 data");
 }, PLUGIN_INFO);
