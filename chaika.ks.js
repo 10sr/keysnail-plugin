@@ -2,7 +2,7 @@ var PLUGIN_INFO =
         <KeySnailPlugin>
         <name>chaika</name>
         <description>chaika keysnail plugin</description>
-        <version>0.1.1</version>
+        <version>0.1.2</version>
         <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/chaika.ks.js</updateURL>
         <author homepage="http://10sr.github.com">10sr</author>
         <license>NYSL 0.9982</license>
@@ -119,6 +119,14 @@ function scrollToNew(){
     evalCode("ThreadDocument.scrollToNewRes()");
 }
 
+function findNextThread(){
+    var aAddTab = true;
+    var ti = window.document.getElementById("chaika-thread-toolbaritem");
+    if (ti) {
+        ti._findNextThread(aAddTab);
+    }
+}
+
 
 plugins.withProvides(function (provide) {
     // provide("instapaper-post-page-with-comment", function(){
@@ -134,6 +142,7 @@ plugins.withProvides(function (provide) {
     provide("chaika-open-in-browser", openInBrowser, "open in browser");
     provide("chaika-jump-to", jumpTo, "prompt num to jump to");
     provide("chaika-show-latest", showLatest, "prompt num and show latest");
+    provide("chaika-find-next-thread", findNextThread, "prompt num and show latest");
 
     provide("chaika-open-in-chaika", openInChaika, "open in chaika");
     provide("chaika-goto-board", goToBorad, "go to ita");
