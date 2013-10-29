@@ -128,23 +128,22 @@ function findNextThread(){
 }
 
 
-plugins.withProvides(function (provide) {
-    // provide("instapaper-post-page-with-comment", function(){
-    //     postWithComment(gBrowser.selectedTab);
-    // }, "post page and comment");
-    provide("chaika-post", openPostWindow, "post");
-    provide("chaika-reload", reloadPage, "reload");
-    provide("chaika-find", readFind, "find");
-    provide("chaika-show-latest-50", showLatest50, "show latest 50");
-    provide("chaika-show-first-10", showFirst10, "show first 10");
-    provide("chaika-show-all", showAll, "show all");
-    provide("chaika-enable-digest", enableDigest, "enable digest");
-    provide("chaika-open-in-browser", openInBrowser, "open in browser");
-    provide("chaika-jump-to", jumpTo, "prompt num to jump to");
-    provide("chaika-show-latest", showLatest, "prompt num and show latest");
-    provide("chaika-find-next-thread", findNextThread, "prompt num and show latest");
+if ("ChaikaBrowserOverlay" in window) {
+    plugins.withProvides(function (provide) {
+        provide("chaika-post", openPostWindow, "post");
+        provide("chaika-reload", reloadPage, "reload");
+        provide("chaika-find", readFind, "find");
+        provide("chaika-show-latest-50", showLatest50, "show latest 50");
+        provide("chaika-show-first-10", showFirst10, "show first 10");
+        provide("chaika-show-all", showAll, "show all");
+        provide("chaika-enable-digest", enableDigest, "enable digest");
+        provide("chaika-open-in-browser", openInBrowser, "open in browser");
+        provide("chaika-jump-to", jumpTo, "prompt num to jump to");
+        provide("chaika-show-latest", showLatest, "prompt num and show latest");
+        provide("chaika-find-next-thread", findNextThread, "prompt num and show latest");
 
-    provide("chaika-open-in-chaika", openInChaika, "open in chaika");
-    provide("chaika-goto-board", goToBorad, "go to ita");
-    provide("chaika-scroll-to-new", scrollToNew, "scroll to new res");
-}, PLUGIN_INFO);
+        provide("chaika-open-in-chaika", openInChaika, "open in chaika");
+        provide("chaika-goto-board", goToBorad, "go to ita");
+        provide("chaika-scroll-to-new", scrollToNew, "scroll to new res");
+    }, PLUGIN_INFO);
+}
