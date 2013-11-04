@@ -2,7 +2,7 @@ var PLUGIN_INFO =
         <KeySnailPlugin>
         <name>chaika</name>
         <description>chaika keysnail plugin</description>
-        <version>0.1.2</version>
+        <version>0.1.3</version>
         <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/chaika.ks.js</updateURL>
         <author homepage="http://10sr.github.com">10sr</author>
         <license>NYSL 0.9982</license>
@@ -127,6 +127,16 @@ function findNextThread(){
     }
 }
 
+function reOpenThread(){
+    // reopen current thread
+    // useful after restarting firefox when using randomizePort
+    var baseurl = window.content.location.href;
+    var ti = window.document.getElementById("chaika-thread-toolbaritem");
+    if (ti) {
+        ti._viewChaika(baseurl, false, false);
+    }
+}
+
 
 if ("ChaikaBrowserOverlay" in window) {
     plugins.withProvides(function (provide) {
@@ -145,5 +155,6 @@ if ("ChaikaBrowserOverlay" in window) {
         provide("chaika-open-in-chaika", openInChaika, "open in chaika");
         provide("chaika-goto-board", goToBorad, "go to ita");
         provide("chaika-scroll-to-new", scrollToNew, "scroll to new res");
+        provide("chaika-reopen-thread", reOpenThread, "reopen current thread");
     }, PLUGIN_INFO);
 }
