@@ -1,18 +1,27 @@
 # keysnail plugins
 
+Keysnail plugins by 10sr.
+
+
 ## [dig-url.ks.js](https://raw.github.com/10sr/keysnail-plugin/master/dig-url.ks.js)
 
 Dig current url (or go up directory).
 
 For example, when viewing <http://example.com/foo/bar> you can go up to <http://example.com/foo> or <http://example.com>.
 
+
+
 ## [radikox.ks.js](https://raw.github.com/10sr/keysnail-plugin/master/radikox.ks.js)
 
 Control [radikox](https://addons.mozilla.org/ja/firefox/addon/radikox/) firefox extension from keysnail.
 
+
+
 ## [instapaper.ks.js](https://raw.github.com/10sr/keysnail-plugin/master/instapaper.ks.js)
 
 Post current page to Instapaper.
+
+
 
 ## [shiitake.ks.js](https://raw.github.com/10sr/keysnail-plugin/master/shiitake.ks.js)
 
