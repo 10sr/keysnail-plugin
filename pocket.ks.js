@@ -1,21 +1,25 @@
 var PLUGIN_INFO =
-        <KeySnailPlugin>
-        <name>pocket</name>
-        <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/pocket.ks.js</updateURL>
-        <description>pocket keysnail plugin</description>
-        <version>0.1.1</version>
-        <author mail="" homepage="http://10sr.github.com/">10sr</author>
-        <license>NYSL</license>
-        <minVersion>1.8.3</minVersion>
-        <include>main</include>
-        <detail><![CDATA[
-                === Usage ===
-        ]]></detail>
+    <KeySnailPlugin>
+    <name>pocket</name>
+    <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/pocket.ks.js</updateURL>
+    <description>pocket keysnail plugin</description>
+    <version>0.1.2</version>
+    <author mail="" homepage="http://10sr.github.com/">10sr</author>
+    <license>NYSL</license>
+    <minVersion>1.8.3</minVersion>
+    <include>main</include>
+    <detail><![CDATA[
+            === Usage ===
+            Pocket.
+    ]]></detail>
     </KeySnailPlugin>;
 
 const CONSUMER_KEY = "17747-cde16cb500e9b1e34bbd27d7";
 
 const PREF_PREFIX = "extensions.keysnail.plugins.pocket.";
+
+/////////////////////////////////////
+// utilities
 
 function setUnicharPref(key, value){
     return util.setUnicharPref(PREF_PREFIX + key, value);
@@ -155,21 +159,24 @@ function addTab(tab){
     );
 }
 
+////////////////////////////////////////////////////////////////////
+// exts
+
 function addCurrentTab(){
     addTab(gBrowser.selectedTab);
 }
 
-function getData(num){
+function getData(params, func){
+    params = params || {};
     reqPocketWithAuth(
         "/v3/get",
         "POST",
         {
-            params : {
-                count : num.toString()
-            },
+            params : params,
             callback : function(xhr){
                 if (xhr.status == 200) {
-                    alert(xhr.responseText);
+                    // alert(xhr.responseText);
+                    func(xhr);
                 } else {
                     showPopup("Failed to get data!");
                 }
@@ -179,11 +186,35 @@ function getData(num){
 }
 
 function getLatest10(){
-    getData(10);
+    getData({
+        count : "10",
+        state : "unread"
+    }, function(xhr){
+        return;
+    });
+}
+
+function getOpenLatest(){
+    // get latest entry and delete it
+    getData({
+        count : "1",
+        state : "unread"
+    }, function(xhr){
+        var res = decodeJSON(xhr.responseText);
+        for (var key in res.list) {
+            var elem = res.list[key];
+            if (elem) {
+                showPopup("Now opening \"" + elem["resolved_title"] + "\"");
+                window.openUILinkIn(elem["resolved_url"], "tab");
+            }
+        }
+        return;
+    });
 }
 
 plugins.withProvides(function (provide) {
-    provide("pocket-add-tab", addCurrentTab, "Add current page");
     provide("pocket-authorize", authPocket, "Auth pocket");
+    provide("pocket-add-current", addCurrentTab, "Add current page");
+    provide("pocket-open-latest", getOpenLatest, "Open last saved page");
     provide("pocket-get-latest-10", getLatest10, "Get latest 10 data");
 }, PLUGIN_INFO);
