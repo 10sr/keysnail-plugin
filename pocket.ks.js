@@ -190,6 +190,7 @@ function getLatest10(){
         count : "10",
         state : "unread"
     }, function(xhr){
+        // TODO: use selector
         return;
     });
 }
