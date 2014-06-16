@@ -166,7 +166,7 @@ function addCurrentTab(){
     addTab(gBrowser.selectedTab);
 }
 
-function getData(params, func){
+function retrieveData(params, func){
     params = params || {};
     reqPocketWithAuth(
         "/v3/get",
@@ -186,7 +186,7 @@ function getData(params, func){
 }
 
 function getLatest10(){
-    getData({
+    retrieveData({
         count : "10",
         state : "unread"
     }, function(xhr){
@@ -197,7 +197,7 @@ function getLatest10(){
 
 function getOpenLatest(){
     // get latest entry and delete it
-    getData({
+    retrieveData({
         count : "1",
         state : "unread"
     }, function(xhr){
