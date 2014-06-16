@@ -3,7 +3,7 @@ var PLUGIN_INFO =
     <name>pocket</name>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/pocket.ks.js</updateURL>
     <description>pocket keysnail plugin</description>
-    <version>0.1.2</version>
+    <version>0.1.3</version>
     <author mail="" homepage="http://10sr.github.com/">10sr</author>
     <license>NYSL</license>
     <minVersion>1.8.3</minVersion>
@@ -202,11 +202,22 @@ function getOpenLatest(){
         state : "unread"
     }, function(xhr){
         var res = decodeJSON(xhr.responseText);
+        if (res.status !== 1) {
+            showPopup("Retrieve failed");
+            return
+        }
         for (var key in res.list) {
             var elem = res.list[key];
             if (elem) {
-                showPopup("Now opening \"" + elem["resolved_title"] + "\"");
-                window.openUILinkIn(elem["resolved_url"], "tab");
+                if (elem["resolved_title"]) {
+                    showPopup("Now opening \"" + elem["resolved_title"] + "\"");
+                    window.openUILinkIn(elem["resolved_url"], "tab");
+                } else if (elem["given_url"]) {
+                    window.openUILinkIn(elem["given_url"], "tab");
+                } else {
+                    showPopup("Cannot parse result");
+                    window.alert(xhr.responseText);
+                }
             }
         }
         return;
