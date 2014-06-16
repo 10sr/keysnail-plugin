@@ -3,14 +3,14 @@ var PLUGIN_INFO =
     <name>pocket</name>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/pocket.ks.js</updateURL>
     <description>pocket keysnail plugin</description>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
     <author mail="" homepage="http://10sr.github.com/">10sr</author>
     <license>NYSL</license>
     <minVersion>1.8.3</minVersion>
     <include>main</include>
     <detail><![CDATA[
             === Usage ===
-            Pocket.
+            Pocket client.
     ]]></detail>
     </KeySnailPlugin>;
 
@@ -213,6 +213,7 @@ function getOpenLatest(){
                     showPopup("Now opening \"" + elem["resolved_title"] + "\"");
                     window.openUILinkIn(elem["resolved_url"], "tab");
                 } else if (elem["given_url"]) {
+                    showPopup("Now opening \"" + elem["given_url"] + "\"");
                     window.openUILinkIn(elem["given_url"], "tab");
                 } else {
                     showPopup("Cannot parse result");
