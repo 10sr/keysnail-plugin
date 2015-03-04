@@ -3,7 +3,7 @@ var PLUGIN_INFO =
     <name>instapaper</name>
     <updateURL>https://raw.github.com/10sr/keysnail-plugin/master/instapaper.ks.js</updateURL>
     <description>Post current page to instapaper</description>
-    <version>0.3.2</version>
+    <version>0.3.3</version>
     <author mail="" homepage="http://10sr.github.com/">10sr</author>
     <license>NYSL</license>
     <minVersion>1.8.3</minVersion>
@@ -57,8 +57,12 @@ function postTab(tab, cm){
     callback : function(xhr){
       display.echoStatusBar(xhr.status);
       if (xhr.readyState === 4 && Math.floor(xhr.status / 100) === 2) {
+        try {
         display.showPopup("Instapaper", "Page \"" + title +
                           "\" added successfully.");
+        } catch (e) {
+          // ad-hoc fix for windows which throws error on showPopup
+        }
         display.echoStatusBar("Instapaper: adding \"" + url +
                               "\"...done.");
         plugins.options["instapaper.close_after_post"] &&
